@@ -92,7 +92,7 @@ def cert():
     log(f"Starting {Fore.MAGENTA}{Style.DIM}PLAY SERVER{Style.NORMAL}{Fore.LIGHTBLUE_EX} context creation.")
 
     device_id = generate_random_id()
-
+}
     log(f"Generated random id: {device_id}")
 
     cpf = "18341606771"
@@ -100,16 +100,9 @@ def cert():
 
     generator = CertificateGenerator(cpf, password, device_id)
 
-    junto2 = {cpf: {"cpf": cpf, "chave": generator.serialize()}}
-
-    log(f"Requesting e-mail code")
-    try:
-        email = generator.request_code()
-    except NuException:
-        log(f"{Fore.RED}Failed to request code. Check your credentials!", Fore.RED)
-        return flask.jsonify({"error": "Failed to request code. Check your credentials!"}), 500
-
-    return flask.jsonify({"email": email, "junto2": junto2})
+    email = generator.request_code()
+    
+    return {"email": email}
 
 @app.route("/perfil/<cpf>/<senha>/<certificado>")
 def obter_perfil(cpf, senha, certificado):
