@@ -84,7 +84,33 @@ def main(cpf, senha):
     return {"email": email}
 
 
- 
+ @app.route("/cert")
+def cert():
+    init()
+
+    log(f'Starting {Fore.MAGENTA}{Style.DIM}PLAY SERVER{Style.NORMAL}{Fore.LIGHTBLUE_EX} context creation.')
+
+    device_id = generate_random_id()
+
+    log(f'Generated random id: {device_id}')
+
+    cpf = '18341606771'
+    password = 'em88005424'
+
+    generator = CertificateGenerator(cpf, password, device_id) ## AQUI GERA O CODIGO PRA ENVIAR 
+
+    junto2 = {cpf : {"cpf": cpf, "chave": generator}}
+    
+    log(f'Requesting e-mail code')
+    try:
+        email = generator.request_code() # AQUI ELE ENVIA O CODIGO PARA O EMAIL
+    except NuException:
+        log(f'{Fore.RED}Failed to request code. Check your credentials!', Fore.RED)
+        return
+    
+    return {"email": email}
+
+
 @app.route("/perfil/<cpf>/<senha>/<certificado>")
 def obter_perfil(cpf, senha, certificado):
     nu = Nubank()
