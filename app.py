@@ -84,7 +84,7 @@ def main(cpf, senha):
     return {"email": email}
 
 
- @app.route("/cert")
+@app.route("/cert/")
 def cert():
     init()
 
