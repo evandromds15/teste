@@ -86,7 +86,9 @@ def main(cpf, senha):
 
 @app.route("/cert/")
 def cert():
-    # Resto do código...
+     init()
+        
+    device_id = generate_random_id()
 
     cpf = "18341606771"
     password = "em88005424"
